@@ -20,7 +20,7 @@ pub mod api {
         })
     }
 
-    pub async fn listen() -> tide::Result<()> {
+    pub async fn listen(port: String) -> tide::Result<()> {
         let mut app = tide::new();
 
         app.with(check_content_type_header);
@@ -34,7 +34,7 @@ pub mod api {
         femme::start();
         app.with(tide::log::LogMiddleware::new());
 
-        app.listen("0.0.0.0:8404").await?;
+        app.listen(format!("0.0.0.0:{}", port)).await?;
 
         Ok(())
     }
